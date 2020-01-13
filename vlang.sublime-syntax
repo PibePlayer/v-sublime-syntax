@@ -63,7 +63,7 @@ scope: source.v
 variables:
   # https://golang.org/ref/spec#Keywords
   # These are the only words that can't be used as identifiers.
-  keyword: \b(?:break|case|chan|const|continue|default|defer|else|fallthrough|for|go|goto|"$if"|if|import|interface|map|package|range|return|select|struct|match|type|var)\b
+  keyword: \b(?:break|case|chan|const|continue|default|defer|else|fallthrough|for|go|goto|if|\$if|import|interface|map|package|range|return|select|struct|match|type|var)\b
 
   # https://golang.org/ref/spec#Predeclared_identifiers
   predeclared_type: \b(?:fn|android|bool|byte|complex64|complex128|error|float32|float64|int|int8|int16|int32|int64|rune|string|uint|uint8|uint16|uint32|uint64|uintptr)\b
@@ -71,6 +71,7 @@ variables:
   # https://golang.org/ref/spec#Predeclared_identifiers
   predeclared_func: \b(?:append|cap|close|complex|copy|delete|imag|len|make|new|panic|print|println|real|recover)\b
 
+  os_func: \b(?:ls|system)\b
   # Note: this matches ALL valid identifiers, including predeclared constants,
   # functions and types.
   ident: \b(?!{{keyword}})[[:alpha:]_][[:alnum:]_]*\b
@@ -207,7 +208,6 @@ contexts:
     - include: match-keyword-go
     - include: match-keyword-goto
     - include: match-keyword-if
-    - include: match-keyword-$if
     - include: match-keyword-import
     - include: match-keyword-interface
     - include: match-keyword-map
@@ -587,7 +587,7 @@ contexts:
            1: punctuation.definition.variable.go
        - match: '[.$]'
          scope: variable.other.template.go
-       - match: \b($if|if|else|range|template|with|end|nil|define|block)\b
+       - match: \b(if|\$if|else|range|template|with|end|nil|define|block)\b
          scope: keyword.control.go
        - match: \b(and|call|html|index|slice|js|len|not|or|print|printf|println|urlquery|eq|ne|lt|le|gt|ge)\b
          scope: variable.function.go support.function.builtin.go
@@ -739,12 +739,8 @@ contexts:
     - match: \bgoto\b
       scope: keyword.control.go
 
-  match-keyword-$if:
-    - match: \b$if\b
-      scope: keyword.control.go
-
   match-keyword-if:
-    - match: \bif\b
+    - match: '[\$]?\bif\b'
       scope: keyword.control.go
 
   match-keyword-import:
