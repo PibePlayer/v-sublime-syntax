@@ -207,6 +207,7 @@ contexts:
     - include: match-keyword-go
     - include: match-keyword-goto
     - include: match-keyword-if
+    - include: match-keyword-$if
     - include: match-keyword-import
     - include: match-keyword-interface
     - include: match-keyword-map
@@ -586,7 +587,7 @@ contexts:
            1: punctuation.definition.variable.go
        - match: '[.$]'
          scope: variable.other.template.go
-       - match: \b(if|else|range|template|with|end|nil|define|block)\b
+       - match: \b($if|if|else|range|template|with|end|nil|define|block)\b
          scope: keyword.control.go
        - match: \b(and|call|html|index|slice|js|len|not|or|print|printf|println|urlquery|eq|ne|lt|le|gt|ge)\b
          scope: variable.function.go support.function.builtin.go
@@ -736,6 +737,10 @@ contexts:
 
   match-keyword-goto:
     - match: \bgoto\b
+      scope: keyword.control.go
+
+  match-keyword-$if:
+    - match: \b$if\b
       scope: keyword.control.go
 
   match-keyword-if:
